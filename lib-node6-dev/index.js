@@ -1,101 +1,62 @@
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 exports.default = UserComponent;
 
+var _tcombForked = require('tcomb-forked');
+
+var _tcombForked2 = _interopRequireDefault(_tcombForked);
+
 var _react = require('react');
 
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 UserComponent.propTypes = {
-    children: _react.PropTypes.func.isRequired
+  children: _react.PropTypes.func.isRequired
 };
 
 UserComponent.contextTypes = {
-    context: _react.PropTypes.object
+  context: _react.PropTypes.object
 };
 
-const Props = function () {
-    function Props(input) {
-        return input != null && typeof input.children === 'function';
-    }
-
-    ;
-    Object.defineProperty(Props, Symbol.hasInstance, {
-        value: function value(input) {
-            return Props(input);
-        }
-    });
-    return Props;
-}();
+const Props = _tcombForked2.default.interface({
+  children: _tcombForked2.default.Function
+}, 'Props');
 
 function UserComponent(_ref, _ref2) {
-    let children = _ref.children;
-    let user = _ref2.context.state.user;
+  var _assert2 = _assert(_ref, Props, '{ children }');
 
-    if (!Props(arguments[0])) {
-        throw new TypeError('Value of argument 0 violates contract.\n\nExpected:\nProps\n\nGot:\n' + _inspect(arguments[0]));
-    }
+  let children = _assert2.children;
+  let user = _ref2.context.state.user;
 
-    return children(user);
+  _assert({
+    children
+  }, Props, '{ children }');
+
+  return children(user);
 }
 
-function _inspect(input, depth) {
-    const maxDepth = 4;
-    const maxKeys = 15;
+function _assert(x, type, name) {
+  function message() {
+    return 'Invalid value ' + _tcombForked2.default.stringify(x) + ' supplied to ' + name + ' (expected a ' + _tcombForked2.default.getTypeName(type) + ')';
+  }
 
-    if (depth === undefined) {
-        depth = 0;
+  if (_tcombForked2.default.isType(type)) {
+    if (!type.is(x)) {
+      type(x, [name + ': ' + _tcombForked2.default.getTypeName(type)]);
+
+      _tcombForked2.default.fail(message());
     }
 
-    depth += 1;
+    return type(x);
+  }
 
-    if (input === null) {
-        return 'null';
-    } else if (input === undefined) {
-        return 'void';
-    } else if (typeof input === 'string' || typeof input === 'number' || typeof input === 'boolean') {
-        return typeof input;
-    } else if (Array.isArray(input)) {
-        if (input.length > 0) {
-            if (depth > maxDepth) return '[...]';
+  if (!(x instanceof type)) {
+    _tcombForked2.default.fail(message());
+  }
 
-            const first = _inspect(input[0], depth);
-
-            if (input.every(item => _inspect(item, depth) === first)) {
-                return first.trim() + '[]';
-            } else {
-                return '[' + input.slice(0, maxKeys).map(item => _inspect(item, depth)).join(', ') + (input.length >= maxKeys ? ', ...' : '') + ']';
-            }
-        } else {
-            return 'Array';
-        }
-    } else {
-        const keys = Object.keys(input);
-
-        if (!keys.length) {
-            if (input.constructor && input.constructor.name && input.constructor.name !== 'Object') {
-                return input.constructor.name;
-            } else {
-                return 'Object';
-            }
-        }
-
-        if (depth > maxDepth) return '{...}';
-        const indent = '  '.repeat(depth - 1);
-        let entries = keys.slice(0, maxKeys).map(key => {
-            return (/^([A-Z_$][A-Z0-9_$]*)$/i.test(key) ? key : JSON.stringify(key)) + ': ' + _inspect(input[key], depth) + ';';
-        }).join('\n  ' + indent);
-
-        if (keys.length >= maxKeys) {
-            entries += '\n  ' + indent + '...';
-        }
-
-        if (input.constructor && input.constructor.name && input.constructor.name !== 'Object') {
-            return input.constructor.name + ' {\n  ' + indent + entries + '\n' + indent + '}';
-        } else {
-            return '{\n  ' + indent + entries + '\n' + indent + '}';
-        }
-    }
+  return x;
 }
 //# sourceMappingURL=index.js.map

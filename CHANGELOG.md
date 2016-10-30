@@ -1,3 +1,7 @@
+### v0.3.1
+
+- [`2ffe710`](https://github.com/alpjs/react-alp-user/commit/2ffe710100c6861bc40cbe154f87f17732a86362) refactor: pob update (Christophe Hurpeau)
+
 ### v0.3.0
 
 - [`e368c9e`](https://github.com/alpjs/react-alp-user/commit/e368c9edd60b496109b17264d57fbbe43ddcc064) pob-babel@8.3.1 (Christophe Hurpeau)

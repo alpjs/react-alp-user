@@ -1,6 +1,21 @@
 import _t from 'tcomb-forked';
 import { PropTypes } from 'react';
 
+var PropsType = _t.interface({
+  children: _t.Function
+}, 'PropsType');
+
+var UserComponent = function UserComponent(_ref, _ref2) {
+  var children = _ref.children;
+  var user = _ref2.context.state.user;
+
+  _assert({
+    children: children
+  }, PropsType, '{ children }');
+
+  return children(user);
+};
+
 UserComponent.propTypes = {
   children: PropTypes.func.isRequired
 };
@@ -9,20 +24,7 @@ UserComponent.contextTypes = {
   context: PropTypes.object
 };
 
-var Props = _t.interface({
-  children: _t.Function
-}, 'Props');
-
-export default function UserComponent(_ref, _ref2) {
-  var children = _ref.children;
-  var user = _ref2.context.state.user;
-
-  _assert({
-    children: children
-  }, Props, '{ children }');
-
-  return children(user);
-}
+export default UserComponent;
 
 function _assert(x, type, name) {
   function message() {
@@ -35,11 +37,7 @@ function _assert(x, type, name) {
 
       _t.fail(message());
     }
-
-    return type(x);
-  }
-
-  if (!(x instanceof type)) {
+  } else if (!(x instanceof type)) {
     _t.fail(message());
   }
 

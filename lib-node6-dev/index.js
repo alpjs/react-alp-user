@@ -3,7 +3,6 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = UserComponent;
 
 var _tcombForked = require('tcomb-forked');
 
@@ -13,6 +12,23 @@ var _react = require('react');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+const PropsType = _tcombForked2.default.interface({
+  children: _tcombForked2.default.Function
+}, 'PropsType');
+
+const UserComponent = (_ref, _ref2) => {
+  var _assert2 = _assert(_ref, PropsType, '{ children }');
+
+  let children = _assert2.children;
+  let user = _ref2.context.state.user;
+
+  _assert({
+    children
+  }, PropsType, '{ children }');
+
+  return children(user);
+};
+
 UserComponent.propTypes = {
   children: _react.PropTypes.func.isRequired
 };
@@ -21,22 +37,7 @@ UserComponent.contextTypes = {
   context: _react.PropTypes.object
 };
 
-const Props = _tcombForked2.default.interface({
-  children: _tcombForked2.default.Function
-}, 'Props');
-
-function UserComponent(_ref, _ref2) {
-  var _assert2 = _assert(_ref, Props, '{ children }');
-
-  let children = _assert2.children;
-  let user = _ref2.context.state.user;
-
-  _assert({
-    children
-  }, Props, '{ children }');
-
-  return children(user);
-}
+exports.default = UserComponent;
 
 function _assert(x, type, name) {
   function message() {
@@ -49,11 +50,7 @@ function _assert(x, type, name) {
 
       _tcombForked2.default.fail(message());
     }
-
-    return type(x);
-  }
-
-  if (!(x instanceof type)) {
+  } else if (!(x instanceof type)) {
     _tcombForked2.default.fail(message());
   }
 

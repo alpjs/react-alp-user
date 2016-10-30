@@ -1,5 +1,16 @@
 import { PropTypes } from 'react';
 
+type PropsType = {
+  children: Function,
+};
+
+const UserComponent = (
+  { children }: PropsType,
+  { context: { state: { user } } },
+) => (
+  children(user)
+);
+
 UserComponent.propTypes = {
   children: PropTypes.func.isRequired,
 };
@@ -8,13 +19,4 @@ UserComponent.contextTypes = {
   context: PropTypes.object,
 };
 
-type Props = {
-  children: Function,
-};
-
-export default function UserComponent(
-  { children }: Props,
-  { context: { state: { user } } },
-) {
-  return children(user);
-}
+export default UserComponent;

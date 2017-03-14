@@ -1,5 +1,7 @@
 # react-alp-user [![NPM version][npm-image]][npm-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/alpjs/react-alp-user.svg)](https://greenkeeper.io/)
+
 react user in context
 
  [![Dependency Status][daviddm-image]][daviddm-url]
